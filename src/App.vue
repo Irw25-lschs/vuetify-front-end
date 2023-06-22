@@ -1,14 +1,18 @@
 <template>
   <v-app>
     <v-main>
-      <img src="https://th.bing.com/th/id/OIP.jh9o0I5pyWbtqgxha1My0wG2CO?w=328&h=113&c=7&r=0&o=5&pid=1.7">
-      <HelloWorld />
+      <img src="https://th.bing.com/th/id/R.b139cbac71658605b146179bcb889b98?rik=d4I%2b8FPfCNlboA&riu=http%3a%2f%2fztechservices.com%2fimages%2faegis-logo-2019.png&ehk=NyJDg0fkvIUfeLNHM0x1FNAE3lbfJmJgcZUkRk2%2fKAg%3d&risl=&pid=ImgRaw&r=0">
+      <open/>
+      <v-data-table>
+
+      </v-data-table>
     </v-main>
   </v-app>
 </template>
 
 <script setup lang="ts">
-  import HelloWorld from '@/components/HelloWorld.vue'
+  import dataTable from '@/components/Data-Table.vue';
+  import open from './components/open.vue'
 </script>
 
 <style>
