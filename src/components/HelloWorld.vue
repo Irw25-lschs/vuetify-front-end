@@ -1,7 +1,11 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h1>{{ data }}</h1>
+  </div>
+  <div v-for="item in data" :key = "item.IP">
+    <label for ="name"></label>
+    <h1 name = "name">{{ item.VMName}}</h1>
+    <label for="price"></label>
+    <h2 name="price">{{ item.Status}}</h2>
   </div>
 </template>
 
