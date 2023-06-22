@@ -1,43 +1,105 @@
-<template>
-  <div v-for="item in data" :key = "item.IP">
-    <h1>VM: {{ item.VMName}}</h1>
-    <h2>Status:{{ item.Status}}</h2>
-    <h2>IP:{{ item.IP}}</h2>
-    <h2>Host:{{ item.Hostname}}</h2>
-    <h2>Hyper Visor:{{ item.HyperVisor}}</h2>
-    <h2>Last check in time:{{ item.LastCheckInTime}}</h2>
-  </div>
-</template>
-
 <script>
 import demo from './Demo-Output.json';
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  },
-  data(){
+export default{
+    data(){
     return{
       data: demo
     }
   }
 }
-</script>
+var secondTable = new Vue({
+  el: '#secondTable',
+  data: {
+    rows: [
+      { id: 1, name: "Chandler Bing", phone: '305-917-1301', profession: 'IT Manager' },
+      { id: 2, name: "Ross Geller", phone: '210-684-8953', profession: 'Paleontologist' },
+      { id: 3, name: "Rachel Green", phone: '765-338-0312', profession: 'Waitress'},
+      { id: 4, name: "Monica Geller", phone: '714-541-3336', profession: 'Head Chef' },
+      { id: 5, name: "Joey Tribbiani", phone: '972-297-6037', profession: 'Actor' },
+      { id: 6, name: "Phoebe Buffay", phone: '760-318-8376', profession: 'Masseuse' }
+    ]
+  },
+  computed: {
+    "columns": function columns() {
+      if (this.rows.length == 0) {
+        return [];
+      }
+      return Object.keys(this.rows[0])
+    }
+  }
+});
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
+</script>
+<template>
+<table id="firstTable">
+    <thead>
+      <tr>
+        <th>VM Name</th>
+        <th>Status</th>
+        <th>IP</th>
+        <th>Hyper Visor</th>
+        <th>Host Name</th>
+        <th>Last Checked</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="row in data">
+        <td>{{row.VMName}}</td>
+        <td>{{row.Status}}</td>
+        <td>{{row.IP}}</td>
+        <td>{{row.HyperVisor}}</td>
+        <td>{{row.Hostname}}</td>
+        <td>{{row.LastCheckInTime}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!--iteration-->
+  <table id="secondTable">
+  <thead>
+    <tr>
+      <th v-for="col in columns">{{col}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="row in rows">
+      <td v-for="col in columns">{{row[col]}}</td>
+    </tr>
+  </tbody>
+</table>
+
+</template>
+<style>
+table {
+    font-family: 'Open Sans', sans-serif;
+    width: 750px;
+    border-collapse: collapse;
+    border: 3px solid #44475C;
+    margin: 10px 10px 0 10px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  table th {
+    text-transform: uppercase;
+    text-align: left;
+    background: #44475C;
+    color: #FFF;
+    padding: 8px;
+    min-width: 30px;
+  }
+  
+  table td {
+    text-align: left;
+    padding: 8px;
+    border-right: 2px solid #7D82A8;
+  }
+  table td:last-child {
+    border-right: none;
+  }
+  table tbody tr:nth-child(2n) td {
+    background: #D4D8F9;
+  }
 </style>
