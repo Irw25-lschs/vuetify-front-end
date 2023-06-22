@@ -1,11 +1,11 @@
 <template>
-  <div class="hello">
-  </div>
   <div v-for="item in data" :key = "item.IP">
-    <label for ="name"></label>
-    <h1 name = "name">{{ item.VMName}}</h1>
-    <label for="price"></label>
-    <h2 name="price">{{ item.Status}}</h2>
+    <h1>VM: {{ item.VMName}}</h1>
+    <h2>Status:{{ item.Status}}</h2>
+    <h2>IP:{{ item.IP}}</h2>
+    <h2>Host:{{ item.Hostname}}</h2>
+    <h2>Hyper Visor:{{ item.HyperVisor}}</h2>
+    <h2>Last check in time:{{ item.LastCheckInTime}}</h2>
   </div>
 </template>
 
