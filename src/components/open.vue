@@ -1,43 +1,66 @@
 <template>
-  <div v-for="item in data" :key = "item.IP">
-    <h1>VM: {{ item.VMName}}</h1>
-    <h2>Status:{{ item.Status}}</h2>
-    <h2>IP:{{ item.IP}}</h2>
-    <h2>Host:{{ item.Hostname}}</h2>
-    <h2>Hyper Visor:{{ item.HyperVisor}}</h2>
-    <h2>Last check in time:{{ item.LastCheckInTime}}</h2>
-  </div>
+<h1>TEST</h1>
+<table id="secondTable">
+  <thead>
+    <tr>
+      <th v-for="col in columns">{{col}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="row in demo">
+      <td v-for="col in columns">{{row[col]}}</td>
+    </tr>
+  </tbody>
+</table>
 </template>
-
 <script>
-import demo from './Demo-Output.json';
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  },
-  data(){
+  import demo from './Demo-Output.json';
+  export default{
+    data(){
     return{
-      data: demo
+      data: demo,
+      computed: {
+    "columns": function columns() {
+      if (this.demo.length == 0) {
+        return [];
+      }
+      return Object.keys(this.demo[0])
+    }
+  }
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+  table {
+    font-family: 'Open Sans', sans-serif;
+    width: 750px;
+    border-collapse: collapse;
+    border: 3px solid #44475C;
+    margin: 10px 10px 0 10px;
+  }
+
+  table th {
+    text-transform: uppercase;
+    text-align: left;
+    background: #44475C;
+    color: #FFF;
+    padding: 8px;
+    min-width: 30px;
+  }
+
+  table td {
+    text-align: left;
+    padding: 8px;
+    border-right: 2px solid #7D82A8;
+  }
+  table td:last-child {
+    border-right: none;
+  }
+  table tbody tr:nth-child(2n) td {
+    background: #D4D8F9;
+  }
 </style>
+    
