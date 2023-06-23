@@ -1,91 +1,94 @@
 <template>
-<table id="thirdTable">
-  <thead>
-    <tr>
-      <th v-for="col in columns" v-on:click="sortTable(col)">{{col}}</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr v-for="row in rows">
-      <td v-for="col in columns">{{row[col]}}</td>
-    </tr>
-  </tbody>
-</table>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th v-for="column in columns" :key="column.key" @click="sortData(column.key)">
+            {{ column.label }}
+            <span v-if="sortKey === column.key">
+              {{ sortDir === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in sortedData" :key="item.id">
+          <td v-for="column in columns" :key="column.key">
+            {{ item[column.key] }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
-
-
-
-
-
 <script>
- var thirdTable ({
-  el: '#thirdTable',
-  data: {
-    rows: [
-      { id: 1, name: "Chandler Bing", phone: '305-917-1301', profession: 'IT Manager' },
-      { id: 2, name: "Ross Geller", phone: '210-684-8953', profession: 'Paleontologist' },
-      { id: 3, name: "Rachel Green", phone: '765-338-0312', profession: 'Waitress'},
-      { id: 4, name: "Monica Geller", phone: '714-541-3336', profession: 'Head Chef' },
-      { id: 5, name: "Joey Tribbiani", phone: '972-297-6037', profession: 'Actor' },
-      { id: 6, name: "Phoebe Buffay", phone: '760-318-8376', profession: 'Masseuse' }
-    ]
+export default {
+  data() {
+    return {
+      data: [],
+      sortKey: '',
+      sortDir: 'asc',
+      columns: [
+        { key: 'VMName', label: 'VM Name' },
+        { key: 'Status', label: 'Status' },
+        { key: 'IP', label: 'IP' },
+        { key: 'Hostname', label: 'Host Name' },
+        { key: 'HyperVisor', label: 'Hyper Visor' },
+        { key: 'LastCheckInTime', label: 'Last Check In' },
+        // Add more columns as needed
+      ]
+    };
   },
-  methods: {
-    "sortTable": function sortTable(col) {
-      this.rows.sort(function(a, b) {
-        if (a[col] > b[col]) {
-          return 1;
-        } else if (a[col] < b[col]) {
-          return  -1;
-        }
-        return 0;
-      })
-    }
+  mounted() {
+    this.fetchData();
   },
   computed: {
-    "columns": function columns() {
-      if (this.rows.length == 0) {
-        return [];
+    sortedData() {
+      return this.data.sort((a, b) => {
+        const modifier = this.sortDir === 'asc' ? 1 : -1;
+        if (a[this.sortKey] < b[this.sortKey]) return -1 * modifier;
+        if (a[this.sortKey] > b[this.sortKey]) return 1 * modifier;
+        return 0;
+      });
+    }
+  },
+  methods: {
+    fetchData() {
+      import('./Demo-Output.json')
+        .then(response => {
+          this.data = response.default;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    sortData(key) {
+      if (this.sortKey === key) {
+        this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        this.sortKey = key;
+        this.sortDir = 'asc';
       }
-      return Object.keys(this.rows[0])
     }
   }
-});
+};
 </script>
-
 
 <style scoped>
 table {
-  font-family: 'Open Sans', sans-serif;
-  width: 750px;
+  width: 100%;
   border-collapse: collapse;
-  border: 3px solid #44475C;
-  margin: 10px 10px 0 10px;
 }
 
-table th {
-  text-transform: uppercase;
-  text-align: left;
-  background: #44475C;
-  color: #FFF;
-  cursor: pointer;
+th, td {
   padding: 8px;
-  min-width: 30px;
-}
-table th:hover {
-        background: #717699;
-      }
-table td {
   text-align: left;
-  padding: 8px;
-  border-right: 2px solid #7D82A8;
+  border-bottom: 1px solid #ddd;
 }
-table td:last-child {
-  border-right: none;
-}
-table tbody tr:nth-child(2n) td {
-  background: #D4D8F9;
+
+th span {
+  font-size: 10px;
+  margin-left: 4px;
 }
 </style>
-    
