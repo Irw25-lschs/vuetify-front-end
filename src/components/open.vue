@@ -1,5 +1,11 @@
 <template>
   <div>
+    <label>
+      <input type="checkbox" v-model="showOnlineServers" />
+    </label>
+    <label>
+      <input type="checkbox" v-model="showOfflineServers" /> 
+    </label>
     <table>
       <thead>
         <tr>
@@ -23,12 +29,14 @@
 </template>
 
 <script>
+src="@/api.js"
 export default {
   data() {
     return {
       data: [],
-      sortKey: '',
-      sortDir: 'asc',
+      showOnlineServers: true, 
+      showOfflineServers: true,
+      jsonData: null,
       columns: [
         { key: 'VMName', label: 'VM Name' },
         { key: 'Status', label: 'Status' },
@@ -40,38 +48,35 @@ export default {
       ]
     };
   },
+
+
   mounted() {
-    this.fetchData();
+    this.fetchDataFromServer();
   },
- /* computed: {
-    sortedData() {
-      return this.data.sort((a, b) => {
-        const modifier = this.sortDir === 'asc' ? 1 : -1;
-        if (a[this.sortKey] < b[this.sortKey]) return -1 * modifier;
-        if (a[this.sortKey] > b[this.sortKey]) return 1 * modifier;
-        return 0;
+  computed: {
+    filteredServers() {
+      // Filter the servers based on checkbox states
+      return this.data.filter((data) => {
+        if (this.showOnlineServers && data.Status === 'online') {
+          return true;
+        }
+        if (this.showOfflineServers && data.Status === 'offline') {
+          return true;
+        }
+        return false;
       });
-    }
-  }, */
+    },
+  },
   methods: {
-    fetchData() {
-      fetch('http://jwerts.aiscorp.local:3000/servers')
-        .then(response => response.json())
-        .then(data => {
-          this.data = data;
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
+    async fetchDataFromServer() {
+      try {
+        const url = 'http://jwerts.aiscorp.local:3000/servers';
+        const data = await fetchData(url);
+        this.jsonData = data;
+      } catch (error) {
+        console.error('Error:', error);
+      }
     }
-   // sortData(key) {
-     // if (this.sortKey === key) {
-       // this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
-     // } else {
-      //  this.sortKey = key;
-      //  this.sortDir = 'asc';
-     // }
-    //}
   }
 };
 </script>
