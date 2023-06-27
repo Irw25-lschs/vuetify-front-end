@@ -43,7 +43,7 @@ export default {
   mounted() {
     this.fetchData();
   },
-  computed: {
+ /* computed: {
     sortedData() {
       return this.data.sort((a, b) => {
         const modifier = this.sortDir === 'asc' ? 1 : -1;
@@ -52,25 +52,26 @@ export default {
         return 0;
       });
     }
-  },
+  }, */
   methods: {
     fetchData() {
-      import('./Demo-Output.json')
-        .then(response => {
-          this.data = response.default;
+      fetch('http://jwerts.aiscorp.local:3000/servers')
+        .then(response => response.json())
+        .then(data => {
+          this.data = data;
         })
         .catch(error => {
-          console.error(error);
+          console.error('Error:', error);
         });
-    },
-    sortData(key) {
-      if (this.sortKey === key) {
-        this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
-      } else {
-        this.sortKey = key;
-        this.sortDir = 'asc';
-      }
     }
+   // sortData(key) {
+     // if (this.sortKey === key) {
+       // this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
+     // } else {
+      //  this.sortKey = key;
+      //  this.sortDir = 'asc';
+     // }
+    //}
   }
 };
 </script>

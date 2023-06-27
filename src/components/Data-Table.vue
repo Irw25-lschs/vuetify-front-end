@@ -1,12 +1,10 @@
 <script>
-import demo from './example.json';
-export default{
-    data(){
-    return{
-      data: demo
-    }
-  }
-}
+fetch('http://jwerts.aiscorp.local:3000/servers')
+        .then(response => response.json())
+        .then(data => {
+          this.data = data;
+        }) 
+
 </script>
 <template>
 <table id="firstTable">
