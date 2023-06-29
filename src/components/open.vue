@@ -9,19 +9,22 @@
     <table>
       <thead>
         <tr>
-          <th v-for="column in columns" :key="column.key" @click="sortData(column.key)">
-            {{ column.label }}
-            <span v-if="sortKey === column.key">
-              {{ sortDir === 'asc' ? '▲' : '▼' }}
-            </span>
-          </th>
+          <th>Column 1</th>
+          <th>Column 2</th>
+          <th>Column 3</th>
+          <th>Column 4</th>
+          <th>Column 5</th>
+          <th>Column 6</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in sortedData" :key="item.id">
-          <td v-for="column in columns" :key="column.key">
-            {{ item[column.key] }}
-          </td>
+        <tr v-for="item in tableData" :key="item.id">
+          <td>{{ item.Status }}</td>
+          <td>{{ item.IP }}</td>
+          <td>{{ item.LastCheckInTime }}</td>
+          <td>{{ item.VMName }}</td>
+          <td>{{ item.HyperVisor }}</td>
+          <td>{{ item.LastCheckInTime }}</td>
         </tr>
       </tbody>
     </table>
@@ -30,56 +33,22 @@
 
 <script>
 
-import { fetchData } from '@/api';
+import { fetchData } from '../fetchData';
 
 export default {
   data() {
     return {
-      data: [],
-      showOnlineServers: true, 
-      showOfflineServers: true,
-      jsonData: null,
-      columns: [
-        { key: 'VMName', label: 'VM Name' },
-        { key: 'Status', label: 'Status' },
-        { key: 'IP', label: 'IP' },
-        { key: 'Hostname', label: 'Host Name' },
-        { key: 'HyperVisor', label: 'Hyper Visor' },
-        { key: 'LastCheckInTime', label: 'Last Check In' },
-        // Add more columns as needed
-      ]
+      tableData: [],
     };
   },
-
-
-  mounted() {
-    this.fetchDataFromServer();
-  },
-  computed: {
-    filteredServers() {
-      // Filter the servers based on checkbox states
-      return this.data.filter((data) => {
-        if (this.showOnlineServers && data.Status === 'online') {
-          return true;
-        }
-        if (this.showOfflineServers && data.Status === 'offline') {
-          return true;
-        }
-        return false;
-      });
-    },
-  },
-  methods: {
-    async fetchDataFromServer() {
-      try {
-        const url = 'http://jwerts.aiscorp.local:3000/servers';
-        const data = await fetchData(url);
-        this.jsonData = data;
-      } catch (error) {
-        console.error('Error:', error);
-      }
+  async mounted() {
+    try {
+      const url = 'http://jwerts.aiscorp.local:3000/servers'; // Replace with your server link
+      this.tableData = await fetchData(url);
+    } catch (error) {
+      // Handle error
     }
-  }
+  },
 };
 </script>
 

@@ -1,5 +1,5 @@
 <script>
-import data from '@/api.js'
+import { fetchData } from '@/api';
 
 </script>
 <template>
