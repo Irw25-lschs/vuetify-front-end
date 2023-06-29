@@ -24,7 +24,7 @@
           <td>{{ item.LastCheckInTime }}</td>
           <td>{{ item.VMName }}</td>
           <td>{{ item.HyperVisor }}</td>
-          <td>{{ item.LastCheckInTime }}</td>
+          <td>{{ item.Hostname }}</td>
         </tr>
       </tbody>
     </table>
@@ -43,13 +43,13 @@ export default {
   },
   async mounted() {
     try {
-      const url = 'http://jwerts.aiscorp.local:3000/servers'; // Replace with your server link
+      const url = 'http://jwerts.aiscorp.local:6284/servers'; // Replace with your server link
       this.tableData = await fetchData(url);
     } catch (error) {
       // Handle error
     }
   },
-};
+}; 
 </script>
 
 <style scoped>

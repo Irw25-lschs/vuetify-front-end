@@ -8,7 +8,12 @@
   },
   "dependencies": {
     "@mdi/font": "7.0.96",
+    "buffer": "^6.0.3",
+    "fetch": "^1.1.0",
+    "fs": "^0.0.1-security",
     "node-fetch": "^3.3.1",
+    "promise": "^8.3.0",
+    "promises": "^0.2.5",
     "roboto-fontface": "*",
     "vue": "^3.2.0",
     "vuetify": "^3.3.6",

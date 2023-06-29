@@ -9,4 +9,4 @@ export async function fetchData(url: string): Promise<any> {
     console.error('Error:', error);
     throw error;
   }
-}
+} 
