@@ -1,9 +1,5 @@
 <script>
-/*fetch('http://jwerts.aiscorp.local:3000/servers')
-        .then(response => response.json())
-        .then(data => {
-          this.data = data;
-        }) */
+import data from '@/api.js'
 
 </script>
 <template>

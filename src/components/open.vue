@@ -29,7 +29,9 @@
 </template>
 
 <script>
-src="@/api.js"
+
+import { fetchData } from '@/api';
+
 export default {
   data() {
     return {

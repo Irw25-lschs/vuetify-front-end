@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-async function fetchData(url) {
+export async function fetchData(url: string): Promise<any> {
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -10,5 +10,3 @@ async function fetchData(url) {
     throw error;
   }
 }
-
-export default fetchData;

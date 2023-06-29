@@ -8,7 +8,7 @@
   </v-app>
 </template>
 
-<script setup lang="ts">
+<script setup lang="js">
   import dataTable from './components/Data-Table.vue';
   import dare from './components/open.vue'
 </script>
