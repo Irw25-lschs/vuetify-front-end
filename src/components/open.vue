@@ -1,56 +1,53 @@
 <template>
-  <div>
-    <label>
-      <input type="checkbox" v-model="showOnlineServers" />
-    </label>
-    <label>
-      <input type="checkbox" v-model="showOfflineServers" /> 
-    </label>
-    <table>
-      <thead>
-        <tr>
-          <th>Column 1</th>
-          <th>Column 2</th>
-          <th>Column 3</th>
-          <th>Column 4</th>
-          <th>Column 5</th>
-          <th>Column 6</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in tableData" :key="item.id">
-          <td>{{ item.Status }}</td>
-          <td>{{ item.IP }}</td>
-          <td>{{ item.LastCheckInTime }}</td>
-          <td>{{ item.VMName }}</td>
-          <td>{{ item.HyperVisor }}</td>
-          <td>{{ item.Hostname }}</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="card text-center m-3">
+    <h5 class="card-header">Simple GET Request</h5>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>VM Name</th>
+            <th>Status</th>
+            <th>IP</th>
+            <th>Last Check-In Time</th>
+            <th>HyperVisor</th>
+            <th>Hostname</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  v-for="item in products" :key = "item.IP">
+            <td>{{ item.Servers[1] }}</td>
+            <td>{{ item.Servers[1] }}</td>
+            <td>{{ item.Servers[1] }}</td>
+            <td>{{ item.Servers[1] }}</td>
+            <td>{{ item.Servers[1] }}</td>
+            <td>{{ item.Servers[1] }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
-<script>
+<script setup>
 
-import { fetchData } from '../fetchData';
+import { ref, onMounted } from 'vue';
 
-export default {
-  data() {
-    return {
-      tableData: [],
-    };
-  },
-  async mounted() {
-    try {
-      const url = 'http://jwerts.aiscorp.local:6284/servers'; // Replace with your server link
-      this.tableData = await fetchData(url);
-    } catch (error) {
-      // Handle error
-    }
-  },
-}; 
+const products = ref(null);
+
+onMounted(() => {
+  fetch('http://jwerts.aiscorp.local:6284/servers') 
+    .then(response => response.json())
+    .then(data => {
+      products.value = data;
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+});
+
+
 </script>
+
 
 <style scoped>
 table {
