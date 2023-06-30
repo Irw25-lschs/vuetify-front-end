@@ -15,12 +15,12 @@
         </thead>
         <tbody>
           <tr  v-for="item in products" :key = "item.IP">
-            <td>{{ item.Servers }}</td>
-            <td>{{ item.Servers[1] }}</td>
-            <td>{{ item.Servers[1] }}</td>
-            <td>{{ item.Servers[1] }}</td>      
-            <td>{{ item.Servers[1] }}</td>
-            <td>{{ item.Servers[1] }}</td>
+            <td>{{ item.Servers.VMName.value }}</td>
+            <td>{{ item.Servers.Status }}</td>
+            <td>{{ item.Servers.IP }}</td>
+            <td>{{ item.Servers.LastCheckInTime }}</td>      
+            <td>{{ item.Servers.HyperVIsor }}</td>
+            <td>{{ item.Servers.Hostname }}</td>
           </tr>
         </tbody>
       </table>
@@ -32,10 +32,10 @@
 
 import { ref, onMounted } from 'vue';
 
-const products = ref(null);
+var products = ref(null);
 
 onMounted(() => {
-  fetch('http://jwerts.aiscorp.local:6284/servers') 
+  fetch('http://jwerts.aiscorp.local:3000/servers') 
     .then(response => response.json())
     .then(data => {
       products.value = data;
