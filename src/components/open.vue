@@ -15,10 +15,10 @@
         </thead>
         <tbody>
           <tr  v-for="item in products" :key = "item.IP">
+            <td>{{ item.Servers }}</td>
             <td>{{ item.Servers[1] }}</td>
             <td>{{ item.Servers[1] }}</td>
-            <td>{{ item.Servers[1] }}</td>
-            <td>{{ item.Servers[1] }}</td>
+            <td>{{ item.Servers[1] }}</td>      
             <td>{{ item.Servers[1] }}</td>
             <td>{{ item.Servers[1] }}</td>
           </tr>
