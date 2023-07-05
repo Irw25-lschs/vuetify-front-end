@@ -14,13 +14,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr  v-for="item in products" :key = "item.IP">
-            <td>{{ item.Servers.VMName.value }}</td>
-            <td>{{ item.Servers.Status }}</td>
-            <td>{{ item.Servers.IP }}</td>
-            <td>{{ item.Servers.LastCheckInTime }}</td>      
-            <td>{{ item.Servers.HyperVIsor }}</td>
-            <td>{{ item.Servers.Hostname }}</td>
+          <tr v-for="item in Servers" :key="item.VMName">
+            <td>{{ item.VMName }}</td>
+            <td>{{ item.Status }}</td>
+            <td>{{ item.IP }}</td>
+            <td>{{ item.LastCheckInTime }}</td>
+            <td>{{ item.HyperVisor }}</td>
+            <td>{{ item.Hostname }}</td>
           </tr>
         </tbody>
       </table>
@@ -32,20 +32,18 @@
 
 import { ref, onMounted } from 'vue';
 
-var products = ref(null);
+var Servers = ref(null);
 
 onMounted(() => {
-  fetch('http://jwerts.aiscorp.local:3000/servers') 
+  fetch('http://jwerts.aiscorp.local:6284/servers')
     .then(response => response.json())
     .then(data => {
-      products.value = data;
+      Servers.value = data.Servers;
     })
     .catch(error => {
       console.error('Error fetching data:', error);
     });
 });
-
-
 </script>
 
 
