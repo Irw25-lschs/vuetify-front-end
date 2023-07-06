@@ -14,13 +14,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in Servers" :key="item.VMName">
-            <td>{{ item.VMName }}</td>
-            <td>{{ item.Status }}</td>
-            <td>{{ item.IP }}</td>
-            <td>{{ item.LastCheckInTime }}</td>
-            <td>{{ item.HyperVisor }}</td>
-            <td>{{ item.Hostname }}</td>
+          <tr v-for="(server, index) in Servers" :key="index">
+            <td>{{ server.VMName }}</td>
+            <td>{{ server.Status }}</td>
+            <td>{{ server.IP }}</td>
+            <td>{{ server.LastCheckInTime }}</td>
+            <td>{{ server.HyperVisor }}</td>
+            <td>{{ server.Hostname }}</td>
           </tr>
         </tbody>
       </table>
@@ -29,7 +29,6 @@
 </template>
 
 <script setup>
-
 import { ref, onMounted } from 'vue';
 
 var Servers = ref(null);
@@ -38,7 +37,7 @@ onMounted(() => {
   fetch('http://jwerts.aiscorp.local:6284/servers')
     .then(response => response.json())
     .then(data => {
-      Servers.value = data.Servers;
+      Servers.value = data;
     })
     .catch(error => {
       console.error('Error fetching data:', error);
@@ -46,14 +45,14 @@ onMounted(() => {
 });
 </script>
 
-
 <style scoped>
 table {
   width: 100%;
   border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   padding: 8px;
   text-align: left;
   border-bottom: 1px solid #ddd;
