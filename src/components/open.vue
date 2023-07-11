@@ -26,7 +26,9 @@
           </label>
         </div>
       </div>
-
+      <div>
+        <input type="text" id="myInput" onkeyup=myFunction() placeholder="Search for names.." title="Type in a name">
+      </div>
       <table class="table">
         <thead>
           <tr>
@@ -61,7 +63,7 @@ var removeOnline = ref(false);
 var removeOffline = ref(false);
 
 onMounted(() => {
-  fetch('http://fkhan.aiscorp.local:6284/servers')
+  fetch('http://jwerts.aiscorp.local:3000/servers')
     .then(response => response.json())
     .then(data => {
       Servers.value = data;
@@ -86,6 +88,26 @@ const filteredServers = computed(() => {
   }
   return Servers.value;
 });
+
+
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("table");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
 </script>
 
 <style scoped>
@@ -93,7 +115,7 @@ const filteredServers = computed(() => {
   width: 100%;
   border: 1px solid;
   background-color: #708490;
-  font-family: monospace;
+  font-family: HKGrotesk-regular; 
   color: white;
 }
 
@@ -116,8 +138,11 @@ tr:hover {
 .checkbox-container {
   display: flex;
   justify-content: flex-end;
+  font-family: HKGrotesk-Bold;
+  font-weight: bold;
   margin-bottom: 10px;
 }
+
 
 .form-check {
   margin-right: 10px;
